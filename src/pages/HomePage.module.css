@@ -1,0 +1,28 @@
+.treeSectionHeader {
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.treeContainer :global(.no-outline-tree *:focus) {
+  outline: none !important;
+}
+
+.treeContainer :global(.no-outline-tree div[role="treeitem"]:focus),
+.treeContainer :global(.no-outline-tree div[role="treeitem"]:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.treeContainer :global(.no-outline-tree div[role="treeitem"]:hover) {
+  background-color: rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease;
+}
+
+.treeContainer :global(.no-outline-tree div[role="treeitem"] > div) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
