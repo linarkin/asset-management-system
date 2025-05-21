@@ -1,54 +1,48 @@
-# React + TypeScript + Vite
+# Application for managing assets
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React & TypeScript-based asset management system to create, organize and track a hierarchy of folders, assets, and datapoints with labeling and search.
 
-Currently, two official plugins are available:
+You can see a walkthrough video of the application here - https://youtu.be/7nyTPEf5Njs
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Short description
 
-## Expanding the ESLint configuration
+Important points:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- New Node is creatable only in another Node.
+- Asset is creatable only in Node.
+- Datapoints are connected to Assets and cannot be moved in isolation, only with their parent asset. It's possible to create a datapoint only in Asset.
+- All Nodes, Assets and Datapoints have labels, they are shown in the overview pannel.
+- User can copy path of selected Item
+- User can delete any Item by clicking on a "Bin" icon on hover. After confirming deletion it will be deleted without recovery.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## Architecture
+
+For a high-level overview, data model, and key trade-offs, see [Architecture Overview](./ARCHITECTURE.md).
+
+## Getting Started
+
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/your-repo/asset-management-system.git
+cd asset-management-system
+
+# Install dependencies
+yarn
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Running the App
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+```bash
+# Run application
+yarn dev
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+Open http://localhost:5173 in your browser.
+
+### Building for Production
+
+```bash
+yarn build
 ```

@@ -10,6 +10,7 @@ import {
   traverseTree,
 } from "../utils/treeOperationsHelper";
 import type { TreeNode, Label } from "../types/types";
+import cloneDeep from "lodash/cloneDeep";
 
 const TREE_DATA_STORAGE_KEY = "asset-management-tree-data";
 const SELECTED_ID_STORAGE_KEY = "asset-management-selected-id";
@@ -81,7 +82,7 @@ export function useTreeOperations() {
 
   const updateTreeData = useCallback(
     (processor: (draft: TreeNode[]) => TreeNode[]) => {
-      setTreeData((prev) => processor(JSON.parse(JSON.stringify(prev))));
+      setTreeData((prev) => processor(cloneDeep(prev)));
     },
     [setTreeData]
   );
@@ -117,20 +118,29 @@ export function useTreeOperations() {
     [updateTreeData]
   );
 
-  const handleSelect = useCallback((nodes: any[]) => {
+  const handleSelect = useCallback((nodes: TreeNode[]) => {
     const id = nodes[0]?.id ?? null;
     setSelectedId(id);
   }, []);
 
   const handleCreateFolder = useCallback(() => {
-    if (selectedNode?.type !== "folder") return;
     const newFolder = createFolderNode();
+
+    // if tree is empty, add as root
+    if (treeData.length === 0) {
+      updateTreeData(() => [newFolder]);
+      setSelectedId(newFolder.id);
+      return newFolder.id;
+    }
+
+    // otherwise only add under a selected folder
+    if (selectedNode?.type !== "folder") return;
     updateTreeData(
       (draft) => addNodeToParent(draft, newFolder, selectedId).tree
     );
     treeRef.current?.get(selectedId)?.open();
     return newFolder.id;
-  }, [selectedId, selectedNode, updateTreeData]);
+  }, [treeData, selectedId, selectedNode, updateTreeData, setSelectedId]);
 
   const handleNodeRename = useCallback(
     (nodeId: string, newName: string) =>

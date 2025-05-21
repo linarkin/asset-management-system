@@ -1,3 +1,4 @@
+import cloneDeep from "lodash/cloneDeep";
 import type { TreeNode } from "../types/types";
 
 /**
@@ -74,7 +75,7 @@ export function removeNodesById(
     return nodes.filter((node) => {
       // If this is a target node, collect it and remove it
       if (idsToRemove.includes(node.id)) {
-        removedNodes.push(JSON.parse(JSON.stringify(node)));
+        removedNodes.push(cloneDeep(node));
         return false;
       }
 
@@ -87,7 +88,7 @@ export function removeNodesById(
     });
   }
 
-  const updatedTree = removeNodes(JSON.parse(JSON.stringify(tree)));
+  const updatedTree = removeNodes(cloneDeep(tree));
   return { updatedTree, removedNodes };
 }
 
@@ -142,7 +143,7 @@ export function insertNodes(
   parentId: string | null,
   targetIndex: number
 ): TreeNode[] {
-  const updatedTree = JSON.parse(JSON.stringify(tree));
+  const updatedTree = cloneDeep(tree);
 
   // Insert at root level if no parent specified
   if (parentId === null) {
@@ -170,7 +171,7 @@ export function deleteNodesById(
   tree: TreeNode[],
   idsToDelete: string[]
 ): TreeNode[] {
-  const treeData = JSON.parse(JSON.stringify(tree));
+  const treeData = cloneDeep(tree);
   const idsSet = new Set(idsToDelete);
 
   function removeNodes(nodes: TreeNode[]): TreeNode[] {
@@ -213,7 +214,7 @@ export function addNodeToParent(
   node: TreeNode,
   parentId: string | null
 ): { tree: TreeNode[]; success: boolean } {
-  const newTree = JSON.parse(JSON.stringify(tree));
+  const newTree = cloneDeep(tree);
 
   // If no parent specified, add to root
   if (!parentId) {

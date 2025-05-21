@@ -54,17 +54,14 @@ const TreeItemDetails: React.FC<TreeItemDetailsProps> = ({
         />
       )}
 
-      {node.type === "asset" &&
-        node.children &&
-        node.children.length > 0 &&
-        onUpdateDatapoints && (
-          <DatapointManager
-            datapoints={node.children}
-            onUpdateDatapoints={(dps) => onUpdateDatapoints(node.id, dps)}
-            title="Edit Datapoints"
-            parentId={node.id}
-          />
-        )}
+      {node.type === "asset" && onUpdateDatapoints && (
+        <DatapointManager
+          datapoints={node.children ?? []}
+          onUpdateDatapoints={(dps) => onUpdateDatapoints(node.id, dps)}
+          title="Manage Datapoints"
+          parentId={node.id}
+        />
+      )}
 
       <LabelSection
         node={node}

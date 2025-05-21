@@ -50,7 +50,7 @@ const TreeHeader: React.FC<TreeHeaderProps> = ({
             ) : undefined,
           }}
         />
-        <Tooltip title="Create new folder">
+        <Tooltip title="Create new node">
           <IconButton
             color="primary"
             onClick={onCreateFolder}
